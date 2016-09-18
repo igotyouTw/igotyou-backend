@@ -2,6 +2,7 @@ var httplib = require('http-status')
 var request = require('request')
 var _ = require('underscore')
 
+var wsclient = require('../module/wsclient.js')
 var errorMsg = require('../module/error.js').errorMsg
 var config = require('../config.json')
 
@@ -68,7 +69,16 @@ function receivedMessage (event) {
 
   if (messageText) {
     // echo
-    sendTextMessage(senderID, messageText)
+    // sendTextMessage(senderID, messageText)
+    wsclient.getInstance().then(function (connection) {
+      if (connection.connected) {
+        connection.sendUTF(JSON.stringify({
+          handle: senderID,
+          message: messageText
+        }))
+      }
+    })
+
 
     // If we receive a text message, check to see if it matches any special
     // keywords and send back the corresponding example. Otherwise, just echo
