@@ -8,4 +8,5 @@ ALTER ROLE igotyou SET timezone TO 'UTC';
 
 CREATE DATABASE igotyou;
 GRANT ALL PRIVILEGES ON DATABASE igotyou TO igotyou;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO igotyou
 
